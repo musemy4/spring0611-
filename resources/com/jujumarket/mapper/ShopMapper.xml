@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jujumarket.mapper.ShopMapper">
+
+	<select id="getList" resultType="com.jujumarket.domain.ShopVO">
+		<![CDATA[
+			select * from m_shop where idno>0
+		]]>
+	</select>
+
+	<insert id="insert">
+		insert into m_shop (idno, shopname, customnum, pwd, shopaddr, contact1, contact2) 
+		values (seq_idno.nextval, #{shopname}, #{customnum}, #{pwd}, #{shopaddr}, #{contact1}, #{contact2})
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="idno" order="BEFORE" resultType="String">
+			select seq_idno.nextval from dual
+		</selectKey>
+			insert into m_shop (idno, shopname, customnum, pwd, shopaddr, contact1, contact2) 
+			values (seq_idno.nextval, #{shopname}, #{customnum}, #{pwd}, #{shopaddr}, #{contact1}, #{contact2})
+	</insert>
+	
+	<select id="read" resultType="com.jujumarket.domain.ShopVO">
+		select * from m_shop where idno = #{idno}
+	</select>
+	
+	<delete id="delete">
+		delete from m_shop where idno = #{idno}
+	</delete>
+	
+	<update id="update">
+		update m_shop
+		set shopname = #{shopname}, customnum = #{customnum}, pwd = #{pwd}, shopaddr=#{shopaddr}, contact1=#{contact1}, contact2=#{contact2}
+		where idno = #{idno}
+	</update>
+	
+</mapper>

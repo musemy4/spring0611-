@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jujumarket.mapper.AdminMapper">
+
+	<select id="getList" resultType="com.jujumarket.domain.AdminVO">
+		<![CDATA[
+			select * from m_admin where idno>0
+		]]>
+	</select>
+
+	<insert id="insert">
+		insert into m_admin (idno, pwd,authcode) 
+		values (seq_idno.nextval, #{pwd}, #{authcode})
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="idno" order="BEFORE" resultType="String">
+			select seq_idno.nextval from dual
+		</selectKey>
+		insert into m_admin (idno, pwd,authcode) 
+		values (#{idno}, #{pwd}, #{authcode})
+	
+	</insert>
+	
+	<select id="read" resultType="com.jujumarket.domain.AdminVO">
+		select * from m_admin where idno = #{idno}
+	</select>
+	
+	<delete id="delete">
+		delete from m_admin where idno = #{idno}
+	</delete>
+	
+	<update id="update">
+		update m_admin
+		set pwd=#{pwd}, authcode=#{authcode}
+		where idno = #{idno}
+	</update>
+	
+</mapper>

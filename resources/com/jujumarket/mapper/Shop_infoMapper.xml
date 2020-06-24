@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jujumarket.mapper.Shop_infoMapper">
+
+	<select id="getList" resultType="com.jujumarket.domain.Shop_infoVO">
+		<![CDATA[
+			select * from m_shop_info where idno>0
+		]]>
+	</select>
+
+	<insert id="insert">
+		insert into m_shop_info (idno, businessCode, businessRegFile, bank, bankaccount, thumbImg, backImg, authcode) 
+		values (seq_idno.nextval, #{businessCode}, #{businessRegFile}, #{bank}, #{bankaccount}, #{thumbImg}, #{backImg}, #{authcode})
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="idno" order="BEFORE" resultType="String">
+			select seq_idno.nextval from dual
+		</selectKey>
+			insert into m_shop_info (idno, businessCode, businessRegFile, bank, bankaccount, thumbImg, backImg, authcode) 
+		values (#{idno}, #{businessCode}, #{businessRegFile}, #{bank}, #{bankaccount}, #{thumbImg}, #{backImg}, #{authcode})
+	</insert>
+	
+	<select id="read" resultType="com.jujumarket.domain.Shop_infoVO">
+		select * from m_shop_info where idno = #{idno}
+	</select>
+	
+	<delete id="delete">
+		delete from m_shop_info where idno = #{idno}
+	</delete>
+	
+	<update id="update">
+		update m_shop_info
+		set businessCode=#{businessCode}, businessRegFile=#{businessRegFile}, bank=#{bank}, bankaccount=#{bankaccount},
+		 thumbImg=#{thumbImg}, backImg=#{backImg}, authcode=#{authcode}
+		where idno = #{idno}
+	</update>
+	
+</mapper>
